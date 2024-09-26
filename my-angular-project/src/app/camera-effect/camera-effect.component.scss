@@ -1,0 +1,675 @@
+/* Réinitialisation des marges et paddings, et gestion du défilement */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Empêche le défilement de la page */
+  height: 100%;
+  width: 100%;
+}
+
+/* Styles pour le conteneur principal */
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Occupe toute la hauteur de la fenêtre */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles pour les sections */
+.section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: opacity 1s ease, transform 1s ease;
+  opacity: 0;
+   /* transform: translateY(50px); */ /* Désactivez cette propriété pour le test */
+  pointer-events: none;
+  transform: translateY(50px);
+  pointer-events: none; /* Empêche l'interaction avec les sections masquées */
+}
+
+/* Classe pour rendre une section active ou visible */
+.section.active,
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+  /* transform: translateY(0); */ /* Désactivez cette propriété pour le test */
+  pointer-events: all;
+}
+
+/* Classe pour masquer une section */
+.section.hidden {
+  opacity: 0;
+  transform: translateY(-50px);
+  pointer-events: none;
+}
+
+/* Styles spécifiques pour le Logo Section */
+.logo-section {
+  z-index: 3;
+  margin-left: 50px;
+}
+
+/* Styles spécifiques pour le Content Section */
+.content-section {
+  z-index: 2;
+  /* Ajoutez cette ligne pour vous assurer que la section occupe toute la hauteur et la largeur */
+  width: 100%;
+  height: 100%;
+}
+
+/* Styles spécifiques pour la Bento Grid Section */
+.test-boxes {
+  z-index: 1;
+  display: flex; /* Utilisé pour centrer la grille Bento */
+  justify-content: center;
+  align-items: center;
+  width: 85%; /* Définit la largeur à 85% de la fenêtre */
+  height: 85%;
+  left: 220PX;
+  max-width: 1200px; /* Limite la largeur maximale pour les grands écrans */
+  padding: 2rem;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Classe pour rendre la Bento Grid visible */
+.test-boxes.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Styles pour la grille Bento */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Quatre colonnes de taille égale */
+  grid-gap: 10px; /* Espace entre les éléments de la grille */
+  grid-template-areas:
+    "a a b b"
+    "c c d d"
+    "e e f f"
+    "g g h h"
+    "i i j j"
+    "k k l l"
+    "m m n n"; /* 'm' est la zone pour 'n2' */
+    width: 80%;
+    height: 80%;
+}
+
+
+/* Attribution des zones aux éléments de la grille Bento */
+.bento > .a { grid-area: a; }
+.bento > .b { grid-area: b; }
+.bento > .c { grid-area: c; }
+.bento > .d { grid-area: d; }
+.bento > .e { grid-area: e; }
+.bento > .f { grid-area: f; }
+.bento > .g { grid-area: g; }
+.bento > .h { grid-area: h; }
+.bento > .i { grid-area: i; }
+.bento > .j { grid-area: j; }
+.bento > .k { grid-area: k; }
+.bento > .l { grid-area: l; }
+.bento > .n2 { grid-area: m; } /* 'n2' assigné à la zone 'm' */
+.bento > .n { grid-area: n; }
+
+
+/* Styles pour les éléments de la grille Bento */
+.bento > div {
+  background-color: #ffffff;
+  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  padding: 10px;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Effets au survol des éléments de la grille */
+.bento > div:hover {
+  background-color: #d4d4d4;
+  transform: scale(1.05);
+}
+
+/* Styles pour l'image interactive (SVG) */
+.interactive-image {
+  width: 500px;
+  height: auto;
+
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Animation des lettres avec translation smooth */
+.letter {
+  opacity: 0;
+  transform: translateX(-100px); /* Départ à gauche */
+  transition: opacity 0.5s ease, transform 1s ease;
+}
+
+#path1, #path2 {
+  opacity: 0;
+  transform: translateX(-100px); /* Départ à gauche */
+  transition: opacity 0.5s ease, transform 1s ease;
+}
+
+/* Styles de base pour le logo */
+#logo {
+  opacity: 1;
+}
+
+/* Styles pour le contenu avec effet de zoom avant */
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 1;
+  transform: scale(1); /* Taille initiale */
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  font-size: 20px;
+  padding: 2rem; /* Ajout de padding pour l'espace */
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Classe pour cacher le contenu */
+.hidden-content {
+  opacity: 0;
+  transform: scale(0.5); /* Réduit la taille pour l'effet de disparition */
+}
+
+/* Conteneur pour le bouton et le SVG supplémentaire */
+.bottom-center-btn {
+  position: fixed;
+  bottom: 60px; /* Distance du bas de l'écran */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4; /* Assure que le bouton est au-dessus de toutes les sections */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Styles pour le bouton personnalisé btn-12 */
+.btn-12 {
+  position: relative;
+  width: 130px;
+  height: 40px;
+  border: none; /* Supprime la bordure par défaut */
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  display: inline-block;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  overflow: hidden; /* Assure que les spans restent à l'intérieur du bouton */
+  transition: transform 0.3s; /* Transition pour les transformations */
+}
+
+/* Styles pour les spans à l'intérieur du bouton */
+.btn-12 span {
+  background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+  display: block;
+  position: absolute;
+  top: 0; /* Positionné en haut */
+  left: 0; /* Positionné à gauche */
+  width: 100%; /* Utilisez 100% pour s'adapter à la largeur du bouton */
+  height: 100%; /* Utilisez 100% pour s'adapter à la hauteur du bouton */
+  box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,0.5),
+              7px 7px 20px 0px rgba(0,0,0,0.1),
+              4px 4px 5px 0px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  margin: 0;
+  text-align: center;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  line-height: 40px; /* Centre verticalement le texte */
+  color: #fff; /* Couleur du texte */
+  backface-visibility: hidden; /* Empêche la rémanence lors des rotations */
+  overflow: hidden; /* Empêche les débordements */
+}
+
+/* Styles spécifiques pour le premier span */
+.btn-12 span:nth-child(1) {
+  box-shadow:
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+  transform: rotateX(90deg);
+  transform-origin: 50% 50% -20px;
+}
+
+/* Styles spécifiques pour le deuxième span */
+.btn-12 span:nth-child(2) {
+  transform: rotateX(0deg);
+  transform-origin: 50% 50% -20px;
+}
+
+/* Effet au survol du bouton */
+.btn-12:hover span:nth-child(1) {
+  box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,0.5),
+              7px 7px 20px 0px rgba(0,0,0,0.1),
+              4px 4px 5px 0px rgba(0,0,0,0.1);
+  transform: rotateX(0deg);
+}
+
+/* Effet au survol du bouton pour le deuxième span */
+.btn-12:hover span:nth-child(2) {
+  box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,0.5),
+              7px 7px 20px 0px rgba(0,0,0,0.1),
+              4px 4px 5px 0px rgba(0,0,0,0.1);
+  color: transparent;
+  transform: rotateX(-90deg);
+}
+
+/* Effet au clic (active) du bouton */
+.btn-12:active {
+  transform: translateY(2px); /* Limité à l'axe Y */
+}
+
+/* Styles pour le SVG sous le bouton */
+.bottom-center-btn svg {
+  margin-top: 10px; /* Espace entre le bouton et le SVG */
+}
+
+/* Styles pour le nouvel SVG arrows */
+.arrows {
+  width: 60px;
+  width: 30px; /* Réduit la largeur */
+  height: 36px; /* Réduit la hauteur */
+  position: absolute;
+  left: 50%;
+  margin-left: -15px; /* Ajusté pour centrer la flèche (la moitié de la nouvelle largeur) */
+  bottom: -45px; /* Ajusté proportionnellement à la nouvelle hauteur */
+}
+
+.arrows path {
+  stroke: #000000;
+  fill: transparent;
+  stroke-width: 0.5px; /* Optionnel : ajustez l'épaisseur des traits si nécessaire */
+  animation: arrow 2s infinite;
+  -webkit-animation: arrow 2s infinite; 
+}
+@keyframes arrow {
+  0% {opacity:0}
+  40% {opacity:1}
+  80% {opacity:0}
+  100% {opacity:0}
+}
+
+@-webkit-keyframes arrow /* Safari et Chrome */ {
+  0% {opacity:0}
+  40% {opacity:1}
+  80% {opacity:0}
+  100% {opacity:0}
+}
+
+.arrows path.a1 {
+  animation-delay: -0.5s; /* Ajusté proportionnellement */
+  -webkit-animation-delay: -0.5s; /* Safari et Chrome */
+}
+
+.arrows path.a2 {
+  animation-delay: -0.25s; /* Ajusté proportionnellement */
+  -webkit-animation-delay: -0.25s; /* Safari et Chrome */
+}
+
+.arrows path.a3 {	
+  animation-delay: 0s;
+  -webkit-animation-delay: 0s; /* Safari et Chrome */
+}
+
+
+/* Responsivité */
+@media (max-width: 600px) {
+  .btn-12 span {
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+  }
+
+  .bottom-center-btn {
+    bottom: 50px; /* Ajustez la distance du bas pour les petits écrans */
+  }
+
+  .arrows {
+    width: 40px;
+    height: 48px;
+    margin-left: -32px;
+    bottom: -70px;
+  }
+
+  .arrows path {
+    stroke-width: 0.7px;
+  }
+
+  /* Adaptation de la grille pour la Bento */
+  .test-boxes {
+    width: 85%; /* Maintien de la largeur */
+    left: -10px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(14, auto); /* Ajustez en fonction de votre contenu */
+    grid-template-areas:
+      "a b"
+      "a c"
+      "d e"
+      "d f"
+      "g h"
+      "g i"
+      "j k"
+      "j l"
+      "m n"
+      "m o"
+      "p q"
+      "p r"
+      "s t"
+      "s u";
+  }
+
+  /* Ajustez les styles des éléments de la grille Bento pour les petits écrans si nécessaire */
+}
+
+/* Styles pour la section "A Propos Opteamis Plus" */
+
+.a-propos-dopteamis-plus {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #fafafa;
+  display: flex;
+  /* Modifiez l'alignement pour aligner les éléments en haut */
+  align-items: flex-start;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.a-propos-dopteamis-plus-child {
+  /* Si cet élément ne contient pas de contenu visible, vérifiez s'il n'est pas masqué par un autre élément */
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #d9d9d9;
+  width: 50%;
+  height: 100%;
+  /* Vérifiez le `z-index` */
+  z-index: 1;
+}
+
+.a-propos-opteamis-container {
+  position: absolute;
+  top: 600px;
+  left: 55%;
+  font-size: 80px;
+  /* Assurez-vous que le `z-index` est supérieur à celui de `.a-propos-dopteamis-plus-child` */
+  z-index: 2;
+}
+
+.a-propos {
+  margin: 0;
+}
+
+.le-tramway-jaune-cest-sympa-parent {
+  position: absolute;
+  top: 100px;
+  left: 55%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 18px;
+  color: #6e6e6e;
+}
+
+.le-tramway-jaune-container {
+  cursor: pointer;
+}
+
+.le-tramway-jaune-cest-sympa {
+  margin: 0;
+  padding-left: 20px;
+}
+.le-tramway-jaune-cest-sympa:hover{
+  color: #000;
+  font-weight: bold;
+}
+.element-3d-animation {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  text-align: center;
+  width: 300px;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+/* Ajoutez des styles pour l'effet 3D si nécessaire */
+
+/* Responsive */
+@media (max-width: 768px) {
+  .a-propos-opteamis-container,
+  .le-tramway-jaune-cest-sympa-parent {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .element-3d-animation {
+    left: 50%;
+  }
+}
+
+/* Styles pour le module Key Features */
+.key-features {
+  width: 100%;
+  position: relative;
+  background-color: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 48px;
+  box-sizing: border-box;
+  gap: 32px;
+  max-width: 1440px;
+  text-align: left;
+  font-size: 120px;
+  color: #111;
+  font-family: 'Inter', sans-serif;
+}
+
+.key-features-parent {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.titre-section {
+  position: relative;
+  font-size: 32px;
+}
+
+.keyh {
+  font-size: 45px;
+}
+
+/* Conteneur des flèches */
+.circle-arrow-left-parent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.circle-arrow-left {
+  position: relative;
+  font-weight: 300;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.circle-arrow-left:last-child {
+  margin-right: 0;
+}
+
+.circle-arrow-left.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.circle-arrow-left svg {
+  width: 32px;
+  height: 34px;
+}
+
+.slider-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.instance-parent {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  overflow: visible; /* Permet aux slides étendus de s'afficher pleinement */
+}
+
+/* Slide */
+.slide {
+  flex: 0 0 40%; /* Slide occupe 40% de la largeur par défaut */
+  box-sizing: border-box;
+  margin: 20px;
+  overflow: hidden; /* Pour éviter les débordements */
+  transition: flex-basis 0.5s ease;
+}
+
+.slide.expanded {
+  flex: 0 0 80%; /* Slide s'étend à 80% lorsqu'il est étendu */
+}
+
+/* Conteneur principal du slide */
+.titre-section-parent {
+  display: flex;
+  flex-direction: row; /* Aligne les éléments horizontalement */
+  align-items: stretch; /* Assure que les éléments enfants ont la même hauteur */
+  background-color: #fff;
+  border: 1px solid #000;
+  padding: 32px;
+  gap: 24px;
+  position: relative;
+  overflow: hidden; /* Empêche les débordements */
+}
+
+/* Contenu gauche */
+.left-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Contenu additionnel */
+.additional-content {
+  flex: 0; /* Ne prend pas d'espace par défaut */
+  max-width: 0; /* Largeur initiale de 0 */
+  overflow: hidden;
+  transition: max-width 0.5s ease; /* Transition fluide de la largeur */
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+}
+
+.slide.expanded .additional-content {
+  flex: 1; /* Prend de l'espace lors de l'expansion */
+  max-width: 100%; /* La largeur maximale qu'il peut prendre */
+}
+
+/* Assurer que le bouton "Pour en savoir plus" reste en place */
+.frame-wrapper {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  color: #fff;
+  /* Aucun changement nécessaire ici */
+}
+
+/* Autres styles existants */
+.frame-parent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 32px;
+}
+
+.x-parent,
+.x-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.x-parent {
+  width: 208px;
+}
+
+.x {
+  position: relative;
+  font-size: inherit; /* Hérite de la taille de police du parent */
+}
+
+.le-tramway-jaune {
+  font-size: 16px;
+  color: #616161;
+}
+
+.pour-en-savoir-plus-parent {
+  background-color: #111;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.add {
+  position: relative;
+  font-weight: 300;
+  font-family: 'Font Awesome 6 Pro';
+}
+
+.le-tramway-jaune-avance-lentem-parent {
+  font-size: inherit; /* Hérite de la taille de police du parent */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.additional-content .le-tramway-jaune-avance-lentem-parent .x {
+  font-size: 16px;
+}
+
+.frame-child {
+  background-color: #d9d9d9;
+}

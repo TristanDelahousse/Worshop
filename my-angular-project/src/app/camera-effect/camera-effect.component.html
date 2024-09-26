@@ -1,0 +1,200 @@
+<div class="container">
+  <!-- Audio -->
+  <audio #logoSound src="assets/system-notification-199277.mp3" preload="auto" playsinline></audio>
+  
+  <!-- Logo Section -->
+  <section #logoSection class="section logo-section active">
+    <!-- SVG Interactif -->
+    <svg #interactiveImage class="interactive-image" viewBox="0 0 200 100">
+      <!-- Lettres du mot "PLUS" -->
+      <text id="letter4" class="letter" x="120" y="40">S</text>
+      <text id="letter3" class="letter" x="100" y="40">U</text>
+      <text id="letter2" class="letter" x="80" y="40">L</text>
+      <text id="letter1" class="letter" x="60" y="40">P</text>
+      
+      <!-- Les deux chemins (logo) -->
+      <g id="logo">
+        <path id="path1" d="M50.2369 34.6703C50.2369 37.3349 49.7248 39.4701 48.4229 41.692C48.041 42.0479 47.6417 42.3951 47.2338 42.7162C44.3435 44.9642 40.7676 46.2574 36.8011 46.2574H36.7056C33.7025 45.6325 31.1333 44.617 29.9095 43.6275C29.9009 43.6189 29.8835 43.6102 29.8748 43.6015C30.0744 43.5581 30.2654 43.5147 30.465 43.4539C30.8643 43.3411 31.2635 43.1936 31.6628 43.02C31.767 42.9766 31.8711 42.9245 31.9839 42.8724C32.0621 42.8377 32.1489 42.7943 32.227 42.7509C32.9213 42.4211 33.5289 42.0479 34.0583 41.6486C38.2332 38.5153 37.9207 33.6548 37.86 33.0299C37.2003 28.2388 33.2338 24.3851 28.3299 23.9945C26.1079 23.8123 24.0162 24.3243 22.2455 25.3398C25.1358 21.3733 29.8748 18.8302 35.1954 18.9778C43.2846 19.2034 49.9158 25.7565 50.2196 33.8284C50.2282 34.1148 50.2369 34.3926 50.2369 34.6703Z" fill="#1B1B1B"></path>
+        <path id="path2" d="M19.6764 29.1246C19.6764 34.1847 21.8723 38.7415 25.3615 41.8661C25.9604 42.4129 26.6027 42.9076 27.271 43.3589C29.9703 45.173 33.2078 46.2405 36.7056 46.2579H36.8011C40.7676 46.2579 44.3435 44.9646 47.2338 42.7167C47.6418 42.3955 48.041 42.0483 48.4229 41.6925C43.9096 49.4172 35.6293 54.5295 26.0298 54.5295C11.6479 54.5295 0 42.8729 0 28.4996C0 14.1264 11.4656 2.65211 25.7 2.47852H26.5332C36.992 2.66946 45.9406 9.04889 49.8897 18.0929C46.7564 14.3694 42.0522 11.9999 36.8011 11.9999C27.3404 11.9999 19.6764 19.6726 19.6764 29.1246Z" fill="#1B1B1B"></path>
+      </g>
+    </svg>
+  </section>
+  
+  <!-- Content Section -->
+  <section #contentSection class="section content-section">
+    <div #contentElement class="content">
+      <!-- Nouveau contenu intégré -->
+      <div class="a-propos-dopteamis-plus">
+        <div class="a-propos-dopteamis-plus-child"></div>
+        <div class="a-propos-opteamis-container">
+          <p class="a-propos">A Propos</p>
+          <p class="a-propos">Opteamis Plus</p>
+        </div>
+        <div class="le-tramway-jaune-cest-sympa-parent">
+          <!-- Liste des éléments avec le survol -->
+          <div class="le-tramway-jaune-container" (mouseenter)="onHoverItem(0)" (mouseleave)="onLeaveItem()">
+            <ol class="le-tramway-jaune-cest-sympa">
+              <li>Le tramway Jaune c’est sympa</li>
+            </ol>
+          </div>
+          <div class="le-tramway-jaune-container" (mouseenter)="onHoverItem(1)" (mouseleave)="onLeaveItem()">
+            <ol class="le-tramway-jaune-cest-sympa">
+              <li>Le tramway Jaune c’est joli</li>
+            </ol>
+          </div>
+          <div class="le-tramway-jaune-container" (mouseenter)="onHoverItem(2)" (mouseleave)="onLeaveItem()">
+            <ol class="le-tramway-jaune-cest-sympa">
+              <li>Le tramway Jaune c’est cool</li>
+            </ol>
+          </div>
+          <div class="le-tramway-jaune-container" (mouseenter)="onHoverItem(3)" (mouseleave)="onLeaveItem()">
+            <ol class="le-tramway-jaune-cest-sympa">
+              <li>Le tramway Jaune c’est la vie de fou</li>
+            </ol>
+          </div>
+          <div class="le-tramway-jaune-container" (mouseenter)="onHoverItem(4)" (mouseleave)="onLeaveItem()">
+            <ol class="le-tramway-jaune-cest-sympa">
+              <li>Le tramway Jaune c’est avant tout une amitié forte</li>
+            </ol>
+          </div>
+        </div>
+        <!-- Élément dont le contenu change au survol -->
+        <div class="element-3d-animation">
+          {{ currentContent }}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Bento Grid Section -->
+  <section #boxesSection class="section test-boxes">
+    <div class="bento">
+      <div class="a black">Thunderbolt 4</div>
+      <div class="b">20% Faster CPU</div>
+      <div class="c">30% Faster GPU</div>
+      <div class="d">Industry-leading performance per watt</div>
+      <div class="e">Up to 96GB LPDDR5 memory</div>
+      <div class="f">Over 67 billion transistors</div>
+      <div class="g"> M2 Max</div>
+      <div class="h">12-Core CPU</div>
+      <div class="i">Up to 38-core GPU</div>
+      <div class="j">16-core Neural Engine 15.8 trillion ops/s</div>
+      <div class="k">40% Faster Neural Engine</div>
+      <div class="n2">400GB/s Memory bandwidth</div>
+      <div class="n">400GB/s Memory bandwidth</div>
+    </div>
+  </section>
+
+  <!-- Nouvelle Section Key Features -->
+<section #keyFeaturesSection class="section key-features-section">
+  <div class="key-features">
+    <div class="key-features-parent">
+      <div class="titre-section keyh">Key Features</div>
+      <div class="circle-arrow-left-parent">
+        <div
+          class="circle-arrow-left"
+          (click)="prevSlide()"
+          [class.disabled]="currentSlideIndex === 0"
+          [attr.aria-disabled]="currentSlideIndex === 0"
+        >
+        <svg
+        width="32"
+        height="34"
+        viewBox="0 0 32 34"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M2 17C2 22.0625 4.625 26.625 9 29.125C13.3125 31.6875 18.625 31.6875 23 29.125C27.3125 26.625 30 22.0625 30 17C30 12 27.3125 7.4375 23 4.9375C18.625 2.375 13.3125 2.375 9 4.9375C4.625 7.4375 2 12 2 17ZM32 17C32 22.75 28.9375 28 24 30.875C19 33.75 12.9375 33.75 8 30.875C3 28 0 22.75 0 17C0 11.3125 3 6.0625 8 3.1875C12.9375 0.3125 19 0.3125 24 3.1875C28.9375 6.0625 32 11.3125 32 17ZM14.25 10.3125C14.625 9.9375 15.3125 9.9375 15.6875 10.3125C16.0625 10.6875 16.0625 11.375 15.6875 11.75L11.375 16H23C23.5 16 24 16.5 24 17C24 17.5625 23.5 18 23 18H11.375L15.6875 22.3125C16.0625 22.6875 16.0625 23.375 15.6875 23.75C15.3125 24.125 14.625 24.125 14.25 23.75L8.25 17.75C7.875 17.375 7.875 16.6875 8.25 16.3125L14.25 10.3125Z"
+          fill="#111111"
+        />
+      </svg>
+        </div>
+        <div
+          class="circle-arrow-left"
+          (click)="currentSlideIndex < maxSlideIndex && nextSlide()"
+          [class.disabled]="currentSlideIndex >= maxSlideIndex"
+          [attr.aria-disabled]="currentSlideIndex >= maxSlideIndex"
+        >
+        <svg
+        width="32"
+        height="34"
+        viewBox="0 0 32 34"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M30 17C30 12 27.3125 7.4375 23 4.9375C18.625 2.375 13.3125 2.375 9 4.9375C4.625 7.4375 2 12 2 17C2 22.0625 4.625 26.625 9 29.125C13.3125 31.6875 18.625 31.6875 23 29.125C27.3125 26.625 30 22.0625 30 17ZM0 17C0 11.3125 3 6.0625 8 3.1875C12.9375 0.3125 19 0.3125 24 3.1875C28.9375 6.0625 32 11.3125 32 17C32 22.75 28.9375 28 24 30.875C19 33.75 12.9375 33.75 8 30.875C3 28 0 22.75 0 17ZM17.6875 23.75C17.3125 24.125 16.625 24.125 16.25 23.75C15.875 23.375 15.875 22.6875 16.25 22.3125L20.5625 18H9C8.4375 18 8 17.5625 8 17C8 16.5 8.4375 16 9 16H20.5625L16.25 11.75C15.875 11.375 15.875 10.6875 16.25 10.3125C16.625 9.9375 17.3125 9.9375 17.6875 10.3125L23.6875 16.3125C24.0625 16.6875 24.0625 17.375 23.6875 17.75L17.6875 23.75Z"
+          fill="#111111"
+        />
+      </svg>
+        </div>
+      </div>
+    </div>
+    <div class="slider-container">
+      <div class="instance-parent" [style.transform]="sliderTransform">
+        <!-- Les slides -->
+        <div class="slide" [class.expanded]="slide.expanded" *ngFor="let slide of slides; let i = index">
+          <div class="titre-section-parent">
+            <!-- Contenu gauche -->
+            <div class="left-content">
+              <div class="titre-section">{{ slide.title }}</div>
+              <div class="frame-parent">
+                <div class="x-parent">
+                  <div class="x">3X</div>
+                  <div class="le-tramway-jaune">{{ slide.content }}</div>
+                </div>
+                <div class="x-group">
+                  <div class="x">100X</div>
+                  <div class="le-tramway-jaune">{{ slide.description }}</div>
+                </div>
+                <div class="x-parent">
+                  <div class="x">50X</div>
+                  <div class="le-tramway-jaune">{{ slide.note }}</div>
+                </div>
+              </div>
+              <div class="frame-wrapper">
+                <div class="pour-en-savoir-plus-parent" (click)="toggleDetails(i)">
+                  <div class="titre-section">Pour en savoir plus</div>
+                  <div class="add">{{ slide.expanded ? 'remove' : 'add' }}</div>
+                </div>
+              </div>
+            </div>
+            <!-- Contenu additionnel qui s'affiche à droite -->
+            <div class="additional-content" >
+              <!-- Contenu supplémentaire -->
+              <div class="le-tramway-jaune-avance-lentem-parent">
+                <div class="x">{{ slide.additionalContent }}</div>
+                <img
+                  class="frame-child"
+                  alt=""
+                  src="assets/images/Vector 47.svg"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fin des slides -->
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Nouvelle Section Key Features -->
+
+  
+
+  <!-- Conteneur pour le bouton et le SVG supplémentaire -->
+  <div class="bottom-center-btn">
+    <button class="custom-btn btn-12" (click)="onReadMore()">
+      <span>Cliquez!</span>
+      <span>Lire la suite</span>
+    </button>
+    <!-- SVG sous le bouton -->
+    <svg class="arrows" viewBox="0 0 60 72" preserveAspectRatio="xMidYMid meet">
+      <path class="a1" d="M0 0 L30 32 L60 0"></path>
+      <path class="a2" d="M0 20 L30 52 L60 20"></path>
+      <path class="a3" d="M0 40 L30 72 L60 40"></path>
+    </svg>
+  </div>
+</div>
